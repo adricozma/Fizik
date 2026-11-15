@@ -100,3 +100,41 @@ Le `cout` de debug dans `Terrain::agit_sur()` a également été commenté.
 
 - Scène **Everest** activée avec **20 cailloux** (rayon `1.5`) répartis sur les deux versants (`X ∈ [-26, +14]`, `Y ∈ [-28, +2]`, `Z = 58`).
 - Caméra initiale (`VueOpenGL::initializePosition()`) centrée face à l'Everest.
+
+---
+
+## 5. Compiler et lancer cette branche (toutes plateformes)
+
+Prérequis : **Qt 5** (5.15.2 recommandé, voir la section *Installation* de [`README.md`](README.md)).
+
+### macOS
+```bash
+git clone -b optimisation-perf https://github.com/adricozma/Fizik.git
+cd Fizik
+chmod +x build.sh
+./build.sh 3d
+```
+*(Si le dépôt est déjà cloné localement : `git checkout optimisation-perf && ./build.sh 3d`.)*
+
+### Linux (Debian / Ubuntu)
+```bash
+git clone -b optimisation-perf https://github.com/adricozma/Fizik.git
+cd Fizik
+chmod +x build.sh
+./build.sh 3d
+```
+
+### Windows 10/11 (MinGW, invite de commandes `cmd`)
+Après avoir installé Qt 5.15.2 + MinGW (voir [`README.md`](README.md)) :
+```bat
+set PATH=C:\Qt\5.15.2\mingw81_64\bin;C:\Qt\Tools\mingw810_64\bin;%PATH%
+git clone -b optimisation-perf https://github.com/adricozma/Fizik.git
+cd Fizik
+mkdir build
+cd build
+qmake ..\Projet_Final\Projet_Final.pro CONFIG+=release
+mingw32-make
+cd ..\Projet_Final\Qt_GL
+..\..\build\Qt_GL\release\Simulations.exe
+```
+*(Lancer `mingw32-make` sans `-j`, et exécuter `Simulations.exe` depuis `Projet_Final\Qt_GL` pour que les chemins relatifs vers `../height_data/` fonctionnent.)*

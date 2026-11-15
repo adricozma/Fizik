@@ -358,10 +358,10 @@ void VueOpenGL::init()
 // ======================================================================
 void VueOpenGL::initializePosition()
 {
-  // position initiale
+  // [PERF/DEMO] position initiale centrée sur l'Everest
   matrice_vue.setToIdentity();
-  matrice_vue.rotate(-50.0, 1.0, 0.0, 0.0);
-  matrice_vue.translate(0.0,10.0, -10.0);
+  matrice_vue.rotate(-70.0, 1.0, 0.0, 0.0);
+  matrice_vue.translate(5.0, 80.0, -65.0);
 }
 
 // ======================================================================
@@ -656,21 +656,46 @@ void VueOpenGL::dessineTerrainPoints(QMatrix4x4 const& point_de_vue, std::string
 	}	
 }
 // ======================================================================
-void VueOpenGL::dessineTerrainMesh(QMatrix4x4 const& point_de_vue, vector<Vecteur> liste, size_t lignes, double r, double v, double b){
-//dessiner des triangles entre les points de sorte à paver tout le terrains
-	prog.setUniformValue("vue_modele", matrice_vue * point_de_vue);
-	Vecteur I1({1,0,0});
-	Vecteur I2({0,1,0});
-	Vecteur I3({0,0,1});
-	for(size_t n(0); n<lignes-1; ++n){
-		for(size_t i(0); i<lignes-1;++i){
-			double c((r+v+b)/n*lignes);
-			cout<<liste[i]*I1<<"   "<<liste[i]*I2<<"  "<<liste[i]*I3<<endl;
-			dessineTriangle(point_de_vue,liste[i+n*lignes],liste[i+n*lignes+1],liste[i+(n+1)*lignes],r,v,b);
-			dessineTriangle(point_de_vue,liste[i+n*lignes+1]+epsilon,liste[i+(n+1)*lignes+1]+epsilon,liste[i+(n+1)*lignes]+epsilon,r,v,b);
+void VueOpenGL::dessineTerrainMesh(QMatrix4x4 const& point_de_vue, const vector<Vecteur>& liste, size_t lignes, double r, double v, double b){
+// [PERF] Remplacement de ~9500 appels glBegin/glEnd + cout par un VBO GPU unique (QOpenGLBuffer)
+	if (lignes < 2 || liste.empty()) return;
 
+	if (!terrain_vbo_ready) {
+		QVector<GLfloat> vertices;
+		vertices.reserve(static_cast<int>(18 * (lignes - 1) * (lignes - 1)));
+		Vecteur I1({1,0,0}), I2({0,1,0}), I3({0,0,1});
+		auto push_v = [&vertices, &I1, &I2, &I3](const Vecteur& p) {
+			vertices << static_cast<GLfloat>(p * I1)
+			         << static_cast<GLfloat>(p * I2)
+			         << static_cast<GLfloat>(p * I3);
+		};
+		for (size_t n = 0; n < lignes - 1; ++n) {
+			for (size_t i = 0; i < lignes - 1; ++i) {
+				const Vecteur& a = liste[i + n * lignes];
+				const Vecteur& c = liste[i + n * lignes + 1];
+				const Vecteur& d = liste[i + (n + 1) * lignes];
+				const Vecteur& e = liste[i + (n + 1) * lignes + 1];
+				push_v(a); push_v(c); push_v(d);
+				push_v(c + epsilon); push_v(e + epsilon); push_v(d + epsilon);
+			}
 		}
+		terrain_vertex_count = vertices.size() / 3;
+		terrain_vbo = QOpenGLBuffer(QOpenGLBuffer::VertexBuffer);
+		terrain_vbo.create();
+		terrain_vbo.bind();
+		terrain_vbo.allocate(vertices.constData(), vertices.size() * static_cast<int>(sizeof(GLfloat)));
+		terrain_vbo.release();
+		terrain_vbo_ready = true;
 	}
+
+	prog.setUniformValue("vue_modele", matrice_vue * point_de_vue);
+	prog.setAttributeValue(CouleurId, r, v, b);
+	terrain_vbo.bind();
+	prog.setAttributeBuffer(SommetId, GL_FLOAT, 0, 3);
+	prog.enableAttributeArray(SommetId);
+	glDrawArrays(GL_TRIANGLES, 0, terrain_vertex_count);
+	prog.disableAttributeArray(SommetId);
+	terrain_vbo.release();
 }
 // ======================================================================
 void VueOpenGL::dessineTriangle(QMatrix4x4 const& point_de_vue,Vecteur p1, Vecteur p2, Vecteur p3,double r, double v, double b){

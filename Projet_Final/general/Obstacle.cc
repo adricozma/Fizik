@@ -228,86 +228,65 @@ unsigned int div, vector<Vecteur> points_dessin)
 			
 		}
 		entree.close();
+
+	// [PERF] Chargement unique de f_points_ en mémoire pour point_plus_proche()
+	ifstream entree_col(f_points_);
+	if (entree_col.fail()) throw Erreur("Constructeur Terrain", "Ouverture fichier collision impossible");
+	while (entree_col >> element1 >> element2 >> element3) {
+		if (!entree_col.eof()) {
+			double x(stod(element1)); double y(stod(element2)); double z(stod(element3));
+			points_collision_.push_back(Vecteur({
+				(x + trans_x) * scale_,
+				(y + trans_y) * scale_,
+				(z + trans_z) * scale_ * getScaleZ()
+			}));
+		}
+	}
+	entree_col.close();
 }
 void Terrain::affiche(ostream& sortie) const{
 	sortie<<getNom()<<endl;
 }
 //-------------------------------------------------------------------------------
 const Vecteur Terrain::point_plus_proche(const ObjetMobile& o) const{
-//méthode ou on considère simplement la distance aevc tous les autres points
-	ifstream entree(f_points_);
-	if((entree.fail())) throw Erreur("Terrain::point_plus_proche()", "Ouverture fichier impossible");
-		string element1;
-		string element2;
-		string element3;
-		
-		entree>>element1>>element2>>element3;
-		
-		double d1(stod(element1)); double d2(stod(element2)); double d3(stod(element3));
-		
-		Vecteur prev_p({(d1+getTransX())*getScale(),(d2+getTransY())*getScale(),(d3+getTransZ())*getScale()*getScaleZ()});
-		//~ Vecteur prev_p2;
-		//~ Vecteur prev_p3;
-		while(entree>>element1>>element2>>element3){
-			if(!(entree.eof())){
-				double x(stod(element1)); double y(stod(element2)); double z(stod(element3));
-				Vecteur v({(x+getTransX())*getScale(),
-						   (y+getTransY())*getScale(),
-						   (z+getTransZ())*getScale()*getScaleZ()});
-					if((o.getPosition()-v).norme()<=(o.getPosition()-prev_p).norme()){
-						prev_p=v;
-						//~ N_points_.push_back(v);
-					}
-					
-			}
-			
-			
+// [PERF] Recherche en mémoire dans points_collision_ (plus d'ouverture disque par pas de temps) et norme2() (sans sqrt)
+	if (points_collision_.empty()) throw Erreur("Terrain::point_plus_proche()", "Aucun point de collision");
+	const Vecteur& pos = o.getPosition();
+	size_t best_idx = 0;
+	double best_d2 = (pos - points_collision_[0]).norme2();
+	for (size_t i = 1; i < points_collision_.size(); ++i) {
+		double d2 = (pos - points_collision_[i]).norme2();
+		if (d2 <= best_d2) {
+			best_d2 = d2;
+			best_idx = i;
 		}
-		entree.close();
-		return prev_p;
+	}
+	return points_collision_[best_idx];
 }
 //-------------------------------------------------------------------------------
 vector<Vecteur> Terrain::N_plus_proches(const ObjetMobile& o) const{
+// [PERF] Recherche en mémoire dans points_collision_ avec norme2() (plus d'ouverture disque ni de stod() par balle/image)
+	if (points_collision_.empty()) throw Erreur("Terrain::N_plus_proche()", "Aucun point de collision");
 	vector<Vecteur> N_points;
-	
-	ifstream entree(f_points_);
-	if((entree.fail())) throw Erreur("Terrain::N_plus_proche()", "Ouverture fichier impossible");
-		std::string element1;
-		std::string element2;
-		std::string element3;
-		
-		entree>>element1>>element2>>element3;
-		
-		double d1(stod(element1)); double d2(stod(element2)); double d3(stod(element3));
-		
-		Vecteur prev_p({(d1+getTransX())*getScale(),(d2+getTransY())*getScale(),(d3+getTransZ())*getScale()*getScaleZ()});
-		while(entree>>element1>>element2>>element3){
-			if(!(entree.eof())){
-				double x(stod(element1)); double y(stod(element2)); double z(stod(element3));
-				Vecteur v({(x+getTransX())*getScale(),
-						   (y+getTransY())*getScale(),
-						   (z+getTransZ())*getScale()});
-					if((o.getPosition()-v).norme()<(o.getPosition()-prev_p).norme()){
-						prev_p=v;
-						//~ if(v!=N_points.back()){
-						    
-							N_points.push_back(v);
-						//~ }
-					}
-					
-			}
-				
+	const Vecteur& pos = o.getPosition();
+	double best_d2 = (pos - points_collision_[0]).norme2();
+	for (size_t i = 1; i < points_collision_.size(); ++i) {
+		double d2 = (pos - points_collision_[i]).norme2();
+		if (d2 < best_d2) {
+			best_d2 = d2;
+			N_points.push_back(points_collision_[i]);
 		}
-		entree.close();
-		return N_points;
+	}
+	return N_points;
 }
 //-------------------------------------------------------------------------------
 void Terrain::agit_sur(ObjetMobile& o, const Integrateur& I, double dt) const{
 	vector<Vecteur> N_points(N_plus_proches(o));
 	size_t taille(N_points.size());
-	cout<<endl;
-	cout<<"----------"<<taille<<"------"<<endl;
-	cout<<endl;
+	// [PERF] cout commenté pour éviter 20 affichages console par image
+	//~ cout<<endl;
+	//~ cout<<"----------"<<taille<<"------"<<endl;
+	//~ cout<<endl;
 	//~ N_plus_proches(o).clear();
 	//~ N_plus_proches(o).shrink_to_fit();
 	

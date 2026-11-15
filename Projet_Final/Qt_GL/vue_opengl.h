@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <QOpenGLShaderProgram> // Classe qui regroupe les fonctions OpenGL liées aux shaders
+#include <QOpenGLBuffer>        // [PERF] VBO OpenGL pour le maillage du terrain
 #include <QMatrix4x4>
 #include "support_a_dessin.h"
 #include "Vecteur.h"
@@ -63,7 +64,8 @@ class VueOpenGL : public SupportADessin {
  
   void dessineTerrainPoints(QMatrix4x4 const& point_de_vue, std::string fichier_entree,
 																				    double v_max=1.0, double range=1.0);
-  void dessineTerrainMesh(QMatrix4x4 const& point_de_vue,std::vector<Vecteur> liste, 
+  // [PERF] Passage par référence constante (évite de copier ~4900 Vecteur par appel)
+  void dessineTerrainMesh(QMatrix4x4 const& point_de_vue,const std::vector<Vecteur>& liste, 
 																size_t lignes=70,double r=1.0, double v=1.0, double b=1.0);
   void dessineTriangle(QMatrix4x4 const& point_de_vue,Vecteur p1, Vecteur p2,Vecteur p3,
 																				 double r=1.0, double v=1.0, double b=1.0);
@@ -80,6 +82,11 @@ class VueOpenGL : public SupportADessin {
   
   // Caméra
   QMatrix4x4 matrice_vue;
+
+  // [PERF] Buffer GPU (VBO) pour dessiner tout le maillage du terrain en un seul appel
+  QOpenGLBuffer terrain_vbo;
+  int terrain_vertex_count = 0;
+  bool terrain_vbo_ready = false;
 
 };
 

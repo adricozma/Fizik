@@ -146,7 +146,8 @@ class Terrain: public Obstacle{
 	 double getVmax() const{return v_max_;}
 	 double getRange() const{return range_;}
 	 double getScaleZ() const{return scaleZ_;}
-	 std::vector<Vecteur> getPointsDessin() const{return points_dessin_;}
+	 // [PERF] Retour par référence constante (évite de copier ~4900 Vecteur à chaque image)
+	 const std::vector<Vecteur>& getPointsDessin() const{return points_dessin_;}
 	 unsigned int getDivision() const{return div_;}
 //------------------------Méthodes--------------------------------------
 //----------------------------------------------------------------------
@@ -171,4 +172,6 @@ class Terrain: public Obstacle{
 	double scaleZ_; //Souvent les données sont un peu applaties dons on rajoute un agrandissement vertical
 	unsigned int div_;
 	std::vector<Vecteur> points_dessin_;
+	// [PERF] Cache mémoire des points de collision (évite de relire f_points_ sur disque à chaque image)
+	std::vector<Vecteur> points_collision_;
 };

@@ -358,10 +358,10 @@ void VueOpenGL::init()
 // ======================================================================
 void VueOpenGL::initializePosition()
 {
-  // [PERF/DEMO] position initiale centrée sur l'Everest
+  // position initiale
   matrice_vue.setToIdentity();
-  matrice_vue.rotate(-70.0, 1.0, 0.0, 0.0);
-  matrice_vue.translate(5.0, 80.0, -65.0);
+  matrice_vue.rotate(-50.0, 1.0, 0.0, 0.0);
+  matrice_vue.translate(0.0,10.0, -10.0);
 }
 
 // ======================================================================

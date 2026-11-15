@@ -106,8 +106,8 @@ int main(int argc, char* argv[])
 //~ Terrain K2("../height_data/HeightData_K2_xyz_decale_bis.txt",
 	//~ "../height_data/HeightData_K2_xyz_decale_bis.txt",0.01,0,0,0,-8000,2800,1,60);
 // [PERF/DEMO] Scène Everest + 20 cailloux des deux côtés de la montagne
-Terrain EV("../height_data/Height_Data_Everest_xyz_decale.txt",
-	"../height_data/Height_Data_Everest_xyz_decale.txt",0.01,-4000,-4000,-4000,8000,1500,1,70);
+//~ Terrain EV("../height_data/Height_Data_Everest_xyz_decale.txt",
+	//~ "../height_data/Height_Data_Everest_xyz_decale.txt",0.01,-4000,-4000,-4000,8000,1500,1,70);
 //~ Terrain CV("../height_data/HeightData_Cervin_xyz_decale.txt",
 	//~ "../height_data/HeightData_Cervin_xyz_decale.txt",0.1,-6000,-4000,1500,4000,1500,1.2,40);
 //~ Terrain GC("../height_data/HeightData_G-Canyon_xyz_decale_.txt",
@@ -116,106 +116,106 @@ Terrain EV("../height_data/Height_Data_Everest_xyz_decale.txt",
 //~ "../height_data/HeightData_G-Canyon_xyz_decale_.txt",0.05,-1300,-1000,-1000,1350,300,2,70);
 	  //~ w.ajoute(GC);
 	  //~ w.ajoute(K2); 
-	  w.ajoute(EV);
+	  //~ w.ajoute(EV);
 
-Caillou c1(1,1.5,alpha,mu, {-26,-28,58}, {0,0,0});
-	  w.ajoute(c1);
-Caillou c2(1,1.5,alpha,mu, {-18,-28,58}, {0,0,0});
-	  w.ajoute(c2);
-Caillou c3(1,1.5,alpha,mu, {-10,-28,58}, {0,0,0});
-	  w.ajoute(c3);
-Caillou c4(1,1.5,alpha,mu, {-2,-28,58}, {0,0,0});
-	  w.ajoute(c4);
-Caillou c5(1,1.5,alpha,mu, {6,-28,58}, {0,0,0});
-	  w.ajoute(c5);
-Caillou c6(1,1.5,alpha,mu, {14,-28,58}, {0,0,0});
-	  w.ajoute(c6);
-Caillou c7(1,1.5,alpha,mu, {-26,-18,58}, {0,0,0});
-	  w.ajoute(c7);
-Caillou c8(1,1.5,alpha,mu, {-18,-18,58}, {0,0,0});
-	  w.ajoute(c8);
-Caillou c9(1,1.5,alpha,mu, {-10,-18,58}, {0,0,0});
-	  w.ajoute(c9);
-Caillou c10(1,1.5,alpha,mu, {-2,-18,58}, {0,0,0});
-	  w.ajoute(c10);
-Caillou c18(1,1.5,alpha,mu, {6,-18,58}, {0,0,0});
-	  w.ajoute(c18);
-Caillou c19(1,1.5,alpha,mu, {14,-18,58}, {0,0,0});
-	  w.ajoute(c19);
-Caillou c20(1,1.5,alpha,mu, {-26,-8,58}, {0,0,0});
-	  w.ajoute(c20);
-Caillou c21(1,1.5,alpha,mu, {-18,-8,58}, {0,0,0});
-	  w.ajoute(c21);
-Caillou c22(1,1.5,alpha,mu, {-10,-8,58}, {0,0,0});
-	  w.ajoute(c22);
-Caillou c23(1,1.5,alpha,mu, {-2,-8,58}, {0,0,0});
-	  w.ajoute(c23);
-Caillou c24(1,1.5,alpha,mu, {6,-8,58}, {0,0,0});
-	  w.ajoute(c24);
-Caillou c25(1,1.5,alpha,mu, {14,-8,58}, {0,0,0});
-	  w.ajoute(c25);
-Caillou c26(1,1.5,alpha,mu, {-14,2,58}, {0,0,0});
-	  w.ajoute(c26);
-Caillou c27(1,1.5,alpha,mu, {2,2,58}, {0,0,0});
-	  w.ajoute(c27);
+//~ Caillou c1(1,1.5,alpha,mu, {-26,-28,58}, {0,0,0});
+	  //~ w.ajoute(c1);
+//~ Caillou c2(1,1.5,alpha,mu, {-18,-28,58}, {0,0,0});
+	  //~ w.ajoute(c2);
+//~ Caillou c3(1,1.5,alpha,mu, {-10,-28,58}, {0,0,0});
+	  //~ w.ajoute(c3);
+//~ Caillou c4(1,1.5,alpha,mu, {-2,-28,58}, {0,0,0});
+	  //~ w.ajoute(c4);
+//~ Caillou c5(1,1.5,alpha,mu, {6,-28,58}, {0,0,0});
+	  //~ w.ajoute(c5);
+//~ Caillou c6(1,1.5,alpha,mu, {14,-28,58}, {0,0,0});
+	  //~ w.ajoute(c6);
+//~ Caillou c7(1,1.5,alpha,mu, {-26,-18,58}, {0,0,0});
+	  //~ w.ajoute(c7);
+//~ Caillou c8(1,1.5,alpha,mu, {-18,-18,58}, {0,0,0});
+	  //~ w.ajoute(c8);
+//~ Caillou c9(1,1.5,alpha,mu, {-10,-18,58}, {0,0,0});
+	  //~ w.ajoute(c9);
+//~ Caillou c10(1,1.5,alpha,mu, {-2,-18,58}, {0,0,0});
+	  //~ w.ajoute(c10);
+//~ Caillou c18(1,1.5,alpha,mu, {6,-18,58}, {0,0,0});
+	  //~ w.ajoute(c18);
+//~ Caillou c19(1,1.5,alpha,mu, {14,-18,58}, {0,0,0});
+	  //~ w.ajoute(c19);
+//~ Caillou c20(1,1.5,alpha,mu, {-26,-8,58}, {0,0,0});
+	  //~ w.ajoute(c20);
+//~ Caillou c21(1,1.5,alpha,mu, {-18,-8,58}, {0,0,0});
+	  //~ w.ajoute(c21);
+//~ Caillou c22(1,1.5,alpha,mu, {-10,-8,58}, {0,0,0});
+	  //~ w.ajoute(c22);
+//~ Caillou c23(1,1.5,alpha,mu, {-2,-8,58}, {0,0,0});
+	  //~ w.ajoute(c23);
+//~ Caillou c24(1,1.5,alpha,mu, {6,-8,58}, {0,0,0});
+	  //~ w.ajoute(c24);
+//~ Caillou c25(1,1.5,alpha,mu, {14,-8,58}, {0,0,0});
+	  //~ w.ajoute(c25);
+//~ Caillou c26(1,1.5,alpha,mu, {-14,2,58}, {0,0,0});
+	  //~ w.ajoute(c26);
+//~ Caillou c27(1,1.5,alpha,mu, {2,2,58}, {0,0,0});
+	  //~ w.ajoute(c27);
 //======================================================================
 //==========================Situation 3=================================
 
-//~ Caillou c11(10,1.5,alpha,mu, {20,0,52}, {0,0,0});
-	  //~ w.ajoute(c11);
-//~ Caillou c12(10,1.5,alpha,mu, {20,4,35}, {0,0,0});
-	  //~ w.ajoute(c12);
-//~ Caillou c13(10,1.5,alpha,mu, {20,8,35}, {0,0,0});
-	  //~ w.ajoute(c13);
-//~ Caillou c14(10,1.5,alpha,mu, {20,-3,35}, {0,0,0});
-	  //~ w.ajoute(c14);
-//~ Caillou c15(10,1.5,alpha,mu, {17,3,40}, {0,0,0});
-	  //~ w.ajoute(c15);
-//~ Caillou c16(10,1.5,alpha,mu, {20,9,50}, {0,0,0});
-	  //~ w.ajoute(c16);
+Caillou c11(10,1.5,alpha,mu, {20,0,52}, {0,0,0});
+	  w.ajoute(c11);
+Caillou c12(10,1.5,alpha,mu, {20,4,35}, {0,0,0});
+	  w.ajoute(c12);
+Caillou c13(10,1.5,alpha,mu, {20,8,35}, {0,0,0});
+	  w.ajoute(c13);
+Caillou c14(10,1.5,alpha,mu, {20,-3,35}, {0,0,0});
+	  w.ajoute(c14);
+Caillou c15(10,1.5,alpha,mu, {17,3,40}, {0,0,0});
+	  w.ajoute(c15);
+Caillou c16(10,1.5,alpha,mu, {20,9,50}, {0,0,0});
+	  w.ajoute(c16);
 	  	 
-	 //~ Vecteur v1_b1({-100,-100,-4});
-	 //~ Vecteur v1_b2({200,0,0});
-	 //~ Vecteur v1_b3({0,200,0});
-	 //~ PlanFini PF1(v1_b1, v1_b2, v1_b3);
-	 //~ w.ajoute(PF1);
+	 Vecteur v1_b1({-100,-100,-4});
+	 Vecteur v1_b2({200,0,0});
+	 Vecteur v1_b3({0,200,0});
+	 PlanFini PF1(v1_b1, v1_b2, v1_b3);
+	 w.ajoute(PF1);
 	 
-	 //~ Vecteur v2_b1({20,-20,-2});
-	 //~ Vecteur v2_b2({0,40,0});
-	 //~ Vecteur v2_b3({40,0,40});
-	 //~ PlanFini PF2(v2_b1, v2_b3, v2_b2);
-	 //~ w.ajoute(PF2);
+	 Vecteur v2_b1({20,-20,-2});
+	 Vecteur v2_b2({0,40,0});
+	 Vecteur v2_b3({40,0,40});
+	 PlanFini PF2(v2_b1, v2_b3, v2_b2);
+	 w.ajoute(PF2);
 	 
-	 //~ Pendule P1(10.0, 1,alpha,mu, 7, 1.005, {3}, {0.0}, {1,1,8.81}, {1,-1,0});
+	 Pendule P1(10.0, 1,alpha,mu, 7, 1.005, {3}, {0.0}, {1,1,8.81}, {1,-1,0});
 
-	 //~ w.ajoute(P1);
+	 w.ajoute(P1);
 	 
-	  //~ Boulet boul(10,1.7,alpha,mu,{1,1,3},{1,0,0},{0,0,1},{0,2,0});
-	  //~ w.ajoute(boul);
+	  Boulet boul(10,1.7,alpha,mu,{1,1,3},{1,0,0},{0,0,1},{0,2,0});
+	  w.ajoute(boul);
 	  
-	  //~ Ressort R(5, 1.5, alpha1,mu, {0.4}, {0.0}, {3,5,10},
-			 //~ {1, 0,0}, 1.5, 0.01, 0.0);	 
-	 //~ w.ajoute(R); 
+	  Ressort R(5, 1.5, alpha1,mu, {0.4}, {0.0}, {3,5,10},
+			 {1, 0,0}, 1.5, 0.01, 0.0);	 
+	 w.ajoute(R); 
 	 
-	 //~ Sphere s({3,4,2},2,alpha,mu);
-	 //~ w.ajoute(s);
+	 Sphere s({3,4,2},2,alpha,mu);
+	 w.ajoute(s);
 //======================================================================
 //==========================Situation 4=================================
-	 //~ Vecteur v3_b1({-100,-100,-4});
-	 //~ Vecteur v3_b2({200,0,0});
-	 //~ Vecteur v3_b3({0,200,0});
-	 //~ PlanFini PF3(v3_b1, v3_b2, v3_b3,alpha, mu, false);
-	 //~ w.ajoute(PF3);
+	 Vecteur v3_b1({-100,-100,-4});
+	 Vecteur v3_b2({200,0,0});
+	 Vecteur v3_b3({0,200,0});
+	 PlanFini PF3(v3_b1, v3_b2, v3_b3,alpha, mu, false);
+	 w.ajoute(PF3);
 	 
-//~ Ressort R2(2, 0.2, alpha,mu, {0.4}, {0.0}, {0,0,4},
-			 //~ {0, 1,-1}, 3, 0.01, 2);	 
-	 //~ w.ajoute(R2); 
-//~ Caillou c17(5,1.1,alpha,mu, {0,5,0}, {0,0,0});
-	  //~ w.ajoute(c17);
+Ressort R2(2, 0.2, alpha,mu, {0.4}, {0.0}, {0,0,4},
+			 {0, 1,-1}, 3, 0.01, 2);	 
+	 w.ajoute(R2); 
+Caillou c17(5,1.1,alpha,mu, {0,5,0}, {0,0,0});
+	  w.ajoute(c17);
 	  
- //~ Vent G2({4,20,0},{-8,0,0},{0,0,2},2,3);
-	  //~ Ventilateur v(G2,2);
-	  //~ w.ajoute(v);
+ Vent G2({4,20,0},{-8,0,0},{0,0,2},2,3);
+	  Ventilateur v(G2,2);
+	  w.ajoute(v);
 //======================================================================	
 
 

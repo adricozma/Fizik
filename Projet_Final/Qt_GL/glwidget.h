@@ -12,6 +12,8 @@
 //~ #include "constantes.h"
 //~ #include "Integrateur.h"
 #include <cmath>
+#include <functional>
+#include <vector>
 class GLWidget : public QOpenGLWidget
 /* La fenêtre hérite de QOpenGLWidget ;
  * les événements (clavier, souris, temps) sont des méthodes virtuelles à redéfinir.
@@ -27,20 +29,26 @@ public:
 //Differentes méthodes pour ajouter des objets au système qui 
 //	st un attribut prrrivé
 
-  void ajoute(Balle b) {b.ajoute(S);}
-  void ajoute(Boulet boul) {boul.ajoute(S);}
-  void ajoute(Caillou c) {c.ajoute(S);}
-  void ajoute(Pendule p) {p.ajoute(S);}
-  void ajoute(PenduleSpherique p) {p.ajoute(S);}
-  void ajoute(Ressort r) {r.ajoute(S);}
-  void ajoute(PlanFini p) {p.ajoute(S);}
-  void ajoute(PlanInfini pi) {pi.ajoute(S);}
-  void ajoute(Brique b) {b.ajoute(S);}
-  void ajoute(Sphere s) {s.ajoute(S);}
-  void ajoute(Terrain s) {s.ajoute(S);}
-  void ajoute(Ventilateur v) {v.ajoute(S);}
+  template <typename T>
+  void ajoute_et_enregistre(T obj) {
+    obj.ajoute(S);
+    initializers_.push_back([obj](Systeme& sys) mutable { obj.ajoute(sys); });
+  }
+
+  void ajoute(Balle b) { ajoute_et_enregistre(b); }
+  void ajoute(Boulet boul) { ajoute_et_enregistre(boul); }
+  void ajoute(Caillou c) { ajoute_et_enregistre(c); }
+  void ajoute(Pendule p) { ajoute_et_enregistre(p); }
+  void ajoute(PenduleSpherique p) { ajoute_et_enregistre(p); }
+  void ajoute(Ressort r) { ajoute_et_enregistre(r); }
+  void ajoute(PlanFini p) { ajoute_et_enregistre(p); }
+  void ajoute(PlanInfini pi) { ajoute_et_enregistre(pi); }
+  void ajoute(Brique b) { ajoute_et_enregistre(b); }
+  void ajoute(Sphere s) { ajoute_et_enregistre(s); }
+  void ajoute(Terrain s) { ajoute_et_enregistre(s); }
+  void ajoute(Ventilateur v) { ajoute_et_enregistre(v); }
   
-  void ajoute(ChampForces c) {c.ajoute(S);}
+  void ajoute(ChampForces c) { ajoute_et_enregistre(c); }
   //double increment;
   
 private:
@@ -57,6 +65,7 @@ private:
   // Méthodes de gestion interne
   
   void pause();
+  void restart();
 
   // Vue : ce qu'il faut donner au contenu pour qu'il puisse se dessiner sur la vue
   VueOpenGL vue;
@@ -73,5 +82,6 @@ private:
   IntegrateurRungeKutta I2;
   //Systeme qui contient tous les objets
   Systeme S;
+  std::vector<std::function<void(Systeme&)>> initializers_;
 
 };

@@ -38,6 +38,8 @@ class Systeme : public Dessinable{
 		const double Temps() const {return temps_;}
 		virtual void dessine_sur(SupportADessin& support) const override
 		{ support.dessine(*this); }
+		// [PERF] Réinitialise le système pour permettre le redémarrage de la simulation
+		void reset() { Dessins_.clear(); Objets_.clear(); Obstacles_.clear(); Champs_.clear(); temps_ = 0.0; }
 		~Systeme() = default;
 };
 

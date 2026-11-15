@@ -110,6 +110,12 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
   case Qt::Key_Space:
 	pause();
 	break;
+
+  case Qt::Key_Return:
+  case Qt::Key_Enter:
+  case Qt::Key_Backspace:
+	restart();
+	break;
   };
 
   update(); // redessine
@@ -170,4 +176,13 @@ void GLWidget::pause()
 	killTimer(timerId);
 	timerId = 0;
   }
+}
+
+void GLWidget::restart()
+{
+  S.reset();
+  for (auto& init : initializers_) {
+	init(S);
+  }
+  chronometre.restart();
 }

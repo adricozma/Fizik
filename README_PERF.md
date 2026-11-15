@@ -138,3 +138,40 @@ cd ..\Projet_Final\Qt_GL
 ..\..\build\Qt_GL\release\Simulations.exe
 ```
 *(Lancer `mingw32-make` sans `-j`, et exécuter `Simulations.exe` depuis `Projet_Final\Qt_GL` pour que les chemins relatifs vers `../height_data/` fonctionnent.)*
+
+---
+
+## 6. Commande `restart` (touches `Entrée` / `Effacer`)
+
+Comme la touche `R` est déjà utilisée pour monter la caméra (avec `F` pour descendre), le redémarrage de la simulation est lié aux touches **Entrée (`Return`/`Enter`)** et **Effacer (`Backspace`)**.
+
+### Principe d'implémentation
+`Systeme` n'étant pas copiable (`Systeme(const Systeme&) = delete;`), `GLWidget` mémorise une liste de fonctions d'initialisation (`initializers_`) à chaque appel à `w.ajoute(...)`, puis vide et réinitialise `S` lors du redémarrage :
+
+```cpp
+// general/Systeme.h
+void reset() { Dessins_.clear(); Objets_.clear(); Obstacles_.clear(); Champs_.clear(); temps_ = 0.0; }
+```
+
+```cpp
+// Qt_GL/glwidget.h
+template <typename T>
+void ajoute_et_enregistre(T obj) {
+  obj.ajoute(S);
+  initializers_.push_back([obj](Systeme& sys) mutable { obj.ajoute(sys); });
+}
+```
+
+```cpp
+// Qt_GL/glwidget.cc
+void GLWidget::restart()
+{
+  S.reset();
+  for (auto& init : initializers_) {
+    init(S);
+  }
+  chronometre.restart();
+}
+```
+
+*(Note : la scène active par défaut sur ce commit est **Situations 3 + 4** ; voir la section *Changer de scène* de [`README.md`](README.md) pour basculer sur l'Everest ou une autre scène.)*

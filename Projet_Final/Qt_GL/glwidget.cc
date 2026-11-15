@@ -148,8 +148,10 @@ void GLWidget::timerEvent(QTimerEvent* event)
   try{
   Q_UNUSED(event);
   double dt = chronometre.restart() / 1000.0;
-  vue.setDt(dt);
-  S.evolue(I1,1,dt);
+  // [PERF] Plafonnement de dt et 4 sous-pas avec Runge-Kutta (I2) pour éviter le tunneling
+  double dt_clamped = (dt > 0.02) ? 0.02 : dt;
+  vue.setDt(dt_clamped);
+  S.evolue(I2, 4, dt_clamped / 4.0);
   
   update(); 
 //Boucle répetée pour l'intégration

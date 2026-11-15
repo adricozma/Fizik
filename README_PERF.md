@@ -84,7 +84,19 @@ Le `cout` de debug dans `Terrain::agit_sur()` a également été commenté.
 
 ---
 
-## 3. Scène de démonstration (`Qt_GL/main_qt_gl.cc` & `initializePosition()`)
+## 3. Intégrateur et stabilité (`Qt_GL/glwidget.cc`)
+
+- Passage d'Euler-Cromer (`I1`, 1 pas de taille `dt` non bornée) à **Runge-Kutta (`I2`) avec 4 sous-pas** et `dt` plafonné à `0.02 s` :
+  ```cpp
+  double dt_clamped = (dt > 0.02) ? 0.02 : dt;
+  vue.setDt(dt_clamped);
+  S.evolue(I2, 4, dt_clamped / 4.0);
+  ```
+  Cela évite qu'une balle traverse le terrain (*tunneling*) lors d'un pic de latence ou à grande vitesse.
+
+---
+
+## 4. Scène de démonstration (`Qt_GL/main_qt_gl.cc` & `initializePosition()`)
 
 - Scène **Everest** activée avec **20 cailloux** (rayon `1.5`) répartis sur les deux versants (`X ∈ [-26, +14]`, `Y ∈ [-28, +2]`, `Z = 58`).
 - Caméra initiale (`VueOpenGL::initializePosition()`) centrée face à l'Everest.

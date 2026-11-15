@@ -8,8 +8,7 @@ Le code a été écrit entièrement à la main en 2022, avant l'arrivée des ass
 Les seuls changements apportés pour cette publication concernent la compilation (voir
 [Notes de portage](#notes-de-portage)).
 
-<!-- CAPTURE D'ÉCRAN : remplacer la ligne ci-dessous par l'image de la simulation de l'Everest -->
-<!-- ![Simulation 3D : terrain de l'Everest](docs/everest.png) -->
+![Simulation 3D : terrain de l'Everest](docs/everest.png)
 
 ---
 
@@ -50,10 +49,17 @@ Projet_Final/
 | `O` / `Home` | réinitialiser la caméra |
 | Espace | pause |
 
-Le choix de la scène se fait en commentant ou décommentant les blocs de `Qt_GL/main_qt_gl.cc`
-(la simulation texte se configure de la même façon dans `text/main_text.cc`). Il faut recompiler après chaque changement.
-Par exemple, pour l'**Everest**, décommenter le bloc `Terrain EV(...)` et commenter `Terrain K2(...)`.
-Une fois la simulation d'un terrain lancée, mettre en pause puis se déplacer jusqu'à la montagne.
+### Changer de scène
+
+Les scènes sont définies dans [`Projet_Final/Qt_GL/main_qt_gl.cc`](Projet_Final/Qt_GL/main_qt_gl.cc)
+(et dans [`Projet_Final/text/main_text.cc`](Projet_Final/text/main_text.cc) pour la version texte).
+
+1. **Commenter** la scène actuellement active (par exemple la *Situation 3*).
+2. **Décommenter** le bloc souhaité (*Situation 1*, *2*, *4*, ou un terrain : `K2`, `EV` pour l'Everest, `CV` pour le Cervin, `GC` pour le Grand Canyon) **ainsi que** son `w.ajoute(...)` correspondant (ex. `w.ajoute(EV);`).
+3. **Recompiler et relancer** (seul `main_qt_gl.cc` est recompilé, en quelques secondes) :
+   - macOS / Linux : `./build.sh 3d`
+   - Windows : `mingw32-make` dans `build\`, puis relancer `Simulations.exe` depuis `Projet_Final\Qt_GL`
+4. Pour un terrain, appuyer sur **Espace** (pause) dès l'ouverture puis se déplacer jusqu'à la montagne.
 
 ---
 

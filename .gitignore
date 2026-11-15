@@ -1,0 +1,30 @@
+# Dossier de compilation (build.sh / shadow build Qt Creator)
+build/
+build-*/
+
+# Fichiers générés par qmake / make
+Makefile
+Makefile.*
+.qmake.stash
+qrc_*.cpp
+moc_*.cpp
+*.o
+*.obj
+*.a
+*.lib
+*.app/
+debug/
+release/
+
+# Exécutables compilés sur le serveur Linux de l'EPFL (non portables)
+Projet_Final/Qt_GL/Simulations
+Projet_Final/text/Simulations_text
+Projet_Final/text/Interractions_text
+Projet_Final/general/testObstacle
+Projet_Final/height_data/Projection
+*.exe
+
+# Réglages locaux Qt Creator / OS
+*.pro.user
+*.pro.user.*
+.DS_Store

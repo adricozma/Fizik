@@ -1,0 +1,142 @@
+Question P1.1)
+
+	On peut voir simplement un vecteur comme une liste de valeurs 
+	ordonnées. L'utilisation des vector est donc un choix judicieux.
+
+	On a donc choisi d'avoir comme attribut privé le type Vect qui est 
+	un "vector<double>".
+
+	Toutes les méthodes proposées sont pour l'instant publiques, car 
+	nous ne savons pas encore à ce stade si elle seront utiles à 
+	l'interface ou non.
+
+	Pour une question de modularisation, les accesseurs sont passés en
+	attributs privés.
+
+Qustion P1.2)
+	
+	Nous décidons de partir du principe qu'un vecteur de dimension 
+	inférieure peut très bien être représenté dans une dimension 
+	supérieur. Donc on augmentera la dimension du vecteur de dimension
+	plus petite dans les opération d'addition, de soustraction et de 
+	produit scalaire.
+	Pour le produit vectoriel, à ce stade du projet, il est préférable 
+	de simplement envoyer une erreur. 
+	pour la méthode unitaire, le vecteur nul enverra aussi une erreur. 
+	
+Question P4.1)
+
+	Nous n'ajoutons pas de constructeur de copie car à ce stade du
+	projet, le constructeur par défaut suffit amplement.
+	
+Question P4.2)
+	
+	Cela demanderais de revoir tout le code, car il faudrait par
+	exemple avoir un constructeur qui prend en argument un booleen 
+	en plus des autres valeurs pour pouvoir différencier si l'on donne 
+	des coordonnées sphériques ou cartésiennes. Ensuite, soit le 
+	constructeur fait immédiatement la conversion, soit les méthodes
+	devront elle-mêmes faire la conversion si spécifiquement demandé
+	auparavant.
+	
+Question P4.3)
+	
+	Opérateurs internes introduits : +, - , * (produit scalaire), 
+	* (multiplication par un scalaire), ^ (produit vectoriel).
+	+=, -=, *=. (*= prend en compte produit par scalaire.
+	Et pour un scalaire x, on pourra écrire vect *= x, mais surtout pas x *= vect)
+	== pour la comparaison.
+	
+	Il y a aussi un opérateur externe d'affichage. cout << vecteur; 
+
+Question P5.1)
+	En principe la masse d'une balle est fixée au debut de l'instance 
+	et ne change pas dans le temps tout comme le volume, c'est pourquoi 
+	on initialise la masse et le volume au debut au travers d'un constructeur.
+
+Question P5.2) 
+	Le prototype de agit_sur contient bien evidemment la balle mais 
+	aussi le paramètre masse volumique de l'air qui peut varier et 
+	qui peut changer la dynamique des objets dans un systeme. comme 
+	il n'est pas prédéfini on peut le passer en paramètre.
+	
+Question P6.1)
+
+	Balle héritera de ObjetMobile, car une Balle EST un ObjetMobile.
+	
+Question P6.2)
+
+	Pendule est aussi un ObjetMobile (héritage), cela ne change rien 
+	à ObjetMobile
+	
+Qestion P6.3)
+ 
+	On aurait pu considérer les obstacles comme des objets mobiles à vitesse constamment nulle,
+	mais ça aurait beaucoup compliqué les calcules (surtout la méthode agit_sur)
+	on a donc décider de créer une nouvelle classe Obstacle qui est donc séparée de la classe 
+	ObjetMobile.
+	Obstacle est une classe abstraite, tous les obstacles ont une origine et un vecteur normal
+	en attribut.
+ 
+ Question P7.1)
+	
+	Integrateur est juste constitué d'une méthode public virtuelle
+	evolue qui pour un integrateur représente la méthode d'Euler.
+	Cette méthode reçoit donc une référence sur un ObjetMobile afin
+	de pouvoir modifier ses vecteurs de paramètres. Elle reçoit aussi 
+	un pas de temps (double) pour faire une integration.
+	
+Question P7.2)
+
+	IntegrateurEulerCromer est un Integrateur (héritage).
+	On redéfini la méthode evolue sur IntegrateurEulerCromer 
+
+Question 8.1)
+	Il s'agit d'une méthode virtuelle pure de la classe Dessinable qui nécessite d'être réimplémentée 
+	dans chaque objet dessinable.
+	
+Question P8.2)
+
+	Il faut utiliser une collection hétérogène (tableau de pointeurs)
+
+Question P8.3)
+
+	Il faut être attentif à :
+	1) Est-ce que les pointeurs pointent des zones mémoire allouées statiquement ou dynamiquement ?
+	2) Qui doit s'occuper de désallouer les zones mémoire
+	
+Question P8.4)
+
+	Notre classe Systeme contient 4 collections hétérogènes (tableaux dynamiques de pointeurs).
+	C'est à dire un tableau de "Dessinable", de "ObjetMobile", de "Obstacle" et de "ChampForce".
+	
+	Les Objets s'ajoutent eux même aux Systeme (O.ajoute(S) et non pas S.ajoute(O))
+	L'idée derrière ces quatre tableaux est de pouvoir lier l'Objet (Simulation) et son Dessin.
+	Comme Ca on fait les calculs sur les 3 tableaux derniers tableaux cités, et celui qui dessine
+	à juste a dessiner les dessinable. On utilise cette conception en anticipation aux ObjetCompose.
+	
+	On a donc des shared_ptr et les objets qui s'ajoutent au Systeme le font par une copie (allocation dynamique)
+	et s'ajoute dans les tableau où il doit être. Une balle s'ajoute au tableau de Dessinable et ObjetMobile.
+	
+	Systeme à aussi un attribut temps qui démarre à 0 lors de sa création et qui évolue de dt lorsqu'on fait évoluer le systeme.
+	
+	Les autres méthodes sont des méthodes qui ajoutent les objets aux bons endroits, il y a aussi la méthode évolue qui prend en paramètre
+	un integrateur et un pas de temps puis qui fait évioluer le système d'un pas de temps.
+	On peut aussi choisir le nombre d'iteration que l'on souhaite faire.
+
+Question P11)
+
+	Pour représenter ces Objets, On introduit une nouvelle classe abstraite ObjetCompose
+	qui contient une struct "ListeComposante" qui contient un tableau d'ObjetMobile, d'Obstacle et de ChampForce (3 tableau de shared_ptr).
+	Ils se comportent comme des Objets "normaux" , méthode copie, ajout(Systeme&), accesseur pour les attributs. 
+
+Question P12)
+	Cela ne change rien à notre conception car on ne peut pas copier de systèmes 
+	donc tout ce qu'on pourrait faire c'est couper la simulation et changer d'intégrateur.
+	Et relancer le système. (arrêter le programmer, changer d'intégrateur, et relancer le 
+	programme.	
+
+
+
+
+	

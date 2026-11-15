@@ -1,0 +1,118 @@
+# PROGRESSION
+
+Format : [fait/à faire] TACHE	Durée (en minutes; remplacer les ??)
+
+[V] créer le JOURNAL                                    	 	1
+[V] lire complètement le descriptif général                 	30 
+[V] s'inscrire en binôme                                     	1
+[V] fusionner les deux projets (y compris les fichiers JOURNAL)	180
+[V] Makefile                                               		2
+[V] Vecteur finis (pleinement opérationnels et testés)  		180
+[V] fichier REPONSES                                         	25                                                                               	
+[V] exerciceP9 (simulation textuelle)                         	300+ (trop)
+[V] Transition pointeurs intelligents     				840 !!!!!!
+[V] Graphisme : cadre général (reprise des exemples tuto)    	120
+[V] Graphisme : adaptation à ce projet spécifique                   240                                   
+[V] fichier CONCEPTION                                         	180
+[V] fichier README                                        		40 
+======================================================================
+# A FAIRE (PROCHAINE ETAPE)
+
+Alex:
+	Classe Vecteur			V
+	ObjetMobile			V
+	agit_sur()			V
+	intégrateurs 			V
+	objets composés			V
+	Changer de types de pointeurs	V
+	TextViewer			V
+
+Adrian: 
+	Obstacles			V
+	point_plus_proche()		V
+	distance()			V
+	Terrain()			V
+	Terrain.agit_sur()		V
+	Graphismes			V
+
+======================================================================
+# SUIVI
+
+## Semaine 2 :
+-Nous avons décidé qui s'occupait de remolir le JOURNAL et qui s'occupait de repondre aux questions dans REPONSES.txt
+-Nous avons décidé à quels moment de la semaine nous allions bosser ensemble sur le projet.
+-Nous avons décidé que nous allions tous les deux faire la première série d'exercices liée au projet pour bien comprendre la classe Vecteur.
+--------------------------------------------------
+## Semaine 3 :
+-Nous avons mis ensemble nos idées pour améliorer aux mieux la classe Vecteur
+-Nous avons partagé les exos de la semaine en 2, une personne a constinué Vrecteur et l'autre a crée la classe Balle et la classe ChampForces
+-On a décidé un certain nombre de conventions pour notre façon d'écrire le code: "attribut_", "getChose()" et "setChose()" (avec majuscules)
+-Un certain nombre de conventions pour les opérations sur les vecteurs.
+	pour: - l'addition soustraction et le produit scalaire, on part du principe que c'est
+		    la dimmesion superieure qui domine c-à-dire qu'on ajuste les vecteurs de dimmension inférieure à ceux de dimmension supérieure.
+	      - produit vectoriel, envoie de erreurs si les vecteurs ne sont pas de meme dimmension.
+--------------------------------------------------
+## Semaine 4 :
+-Nous avons discuté de Balle et de ChampForces.
+-Nous avons fait la surcharge d'opérateurs et avons prit la convention que R(+, *)(réels) est un corps. 
+ De ce fait la soustraction est l'addition par l'inverse.
+-Pour la surcharge de += et -= (interne) on modifie l'opérande dans les cas limites ou les dimensions des vecteurs ne sont pas les mêmes.
+ Même si c'est en opposition à ce qu'on a vu dans le cours c'est un choix REFLECHI!
+--------------------------------------------------
+## Semaine 5 :
+-Nous avons crée l'intégrateur et commencé a implémenter l'héritage des classes.
+-Nous avons commencé à créer les objets et avons pris consciencé de la néccessité du polymorphisme.
+-Conception de la classe obstacle. 
+--------------------------------------------------
+## Semaine 6 :
+-Nous avons paufiné l'intégrateur et effectué les test textuels de pendule/pendule sphérique 
+-Nous avons vraiment commancé a implementer le polymorphisme au projet et y avons sérieusement réfléchi 
+ a chaque création de nouvelle classe.
+-Commencé l'implementation de la simulation en mode texte d'abbord
+-Création de la classe Obstacle avec le méthodes qui vont avec.
+--------------------------------------------------
+## Semaine 7 :
+-Nous avons fait et testé la méthode point le plus proche et distance dans les obstacles
+-Nous avons implémenté les chocs sans les tests
+-Conception de la classe système 
+-Conception de dessinable et Support a dessin sans les tests
+--------------------------------------------------
+## Semaine 8 :
+-Nous avons testé les chocs et dessinés avec GNUPLOT
+-Nous avons commencé les simulations 3D
+-Corrigé quelques erreurs d'implémentations
+--------------------------------------------------
+## Semaine 9 :
+-Nous avons essayé de simuler en 3D notre système: Principalement essayé d'organiser nos fichiers de façon à séparer simulation 
+ et affichage. Et résoudre certains problèmes d'utilisation de Qt
+-Création de l'intégrateur Runge-Kuta
+-Création d'une méthode de copie Polymorphique pour les ObjetsMobiles
+-Amélioration des chocs et recherche d'une solution pour l'interpénétration des Objets.
+--------------------------------------------------
+## Semaine 10 :
+-Création d'une classe erreur pour mieux comprendre d'ou viennent nos erreurs
+-Correction des chocs Baalle-Plaln
+-Simulations 3D
+--------------------------------------------------
+## Semaine 11 :
+-Création d'objets composés ex: ventilateur 
+-Amélioration chocs balle pendule
+-Grraphismes
+--------------------------------------------------
+## Semaine 12 :
+-Amélioration d'objets composés et implémentation graphique
+-Graphismes, amélioration et création d'une classe Terrain. 
+-Tentative d'adaptation de l'orientation des objets dans les graphismes
+-Debuggage général.
+--------------------------------------------------
+## Semaine 13 :
+-Vent pour ventilateur 
+-Graphismes 
+-Debbugage comme toujours.
+-Transition de pointeur à la C au pointeur intelligents (à cause de l'impossibilité
+ de détruire "Système" depuis le rajout de ventilateur
+--------------------------------------------------
+## Semaine 14 :
+-Grapraphismes
+-Finalisation du projet
+-Debuggage
